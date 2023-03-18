@@ -21,7 +21,7 @@ make_fun() {
 		CROSS_COMPILE=${CLANG_DIR}/bin/llvm- \
 		LLVM=1 \
 		LLVM_IAS=1 \
-		CLANG_TRIPLE=aarch64-linux-gnu- \
+		CLANG_TRIPLE=aarch64-linux-gnu- 
 }
 
 # Cloning all the Necessary files
