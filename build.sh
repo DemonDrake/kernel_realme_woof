@@ -3,13 +3,18 @@
 set -e -x
 
 # Final Zip Name
-ZIPNAME="Void-Kernel-test.zip"
+ZIPNAME="Woof-Kernel-test.zip"
 
 # Kernel Config
 KERNEL_DEFCONFIG="vendor/lahaina-qgki_defconfig"
 
 # Prebuilt Clang Toolchain (AOSP)
 CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android13-release/clang-r450784d.tar.gz"
+
+# Prebuilt GCC Utilities (AOSP)
+GCC_x64="https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9"
+GCC_x32="https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9"
+GCC_BRANCH="android12L-release"
 
 # Setup make Command
 make_fun() {
@@ -22,9 +27,11 @@ make_fun() {
 
 # Cloning all the Necessary files
 if [ ! -d clang ]; then mkdir clang && curl "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
+[ ! -d x64 ] && git clone --depth=1 "${GCC_x64}" -b "${GCC_BRANCH}" x64
+[ ! -d x32 ] && git clone --depth=1 "${GCC_x32}" -b "${GCC_BRANCH}" x32
 
 # Setting Toolchain Path
-PATH="${PWD}/clang/bin:/bin"
+PATH="${PWD}/clang/bin:${PWD}/x64/bin:${PWD}/x32/bin:/bin"
 
 # Installing KernelSU
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
