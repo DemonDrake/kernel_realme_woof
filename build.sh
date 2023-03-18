@@ -15,9 +15,7 @@ ZIPNAME="Woof-RMX3461-$(date '+%Y%m%d-%H%M').zip"
 make_fun() {
 	make O=out ARCH=arm64 \
 		CC=clang HOSTCC=clang \
-		CROSS_COMPILE=${CLANG_DIR}/bin/llvm- \
-		LLVM=1 \
-		LLVM_IAS=1 \
+		CROSS_COMPILE=${CLANG_DIR}/bin/llvm- LLVM=1 LLVM_IAS=1 \
 		CLANG_TRIPLE=aarch64-linux-gnu- 
 }
 
@@ -38,6 +36,8 @@ SECONDS=0
 
 # Start Compiling Kernel
 make_fun vendor/lahaina-qgki_defconfig
+
+make_fun -j"$(nproc --all)" || exit $?
 make_fun -j"$(nproc --all)" 2>&1 | tee build.log 
 
 git clone --depth=1 https://github.com/cd-Seraph/AnyKernel3.git -b master AnyKernel
