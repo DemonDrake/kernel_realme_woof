@@ -32,6 +32,14 @@ jobs:
         - name: Check Out
           uses: actions/checkout@v3
           
+        - name: Setup the Environment
+          run: |
+            # Prebuilt Clang Toolchain (AOSP)
+            CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android13-release/clang-r450784d.tar.gz"
+            # Cloning all the Necessary files
+            if [ ! -d clang ]; then mkdir clang && curl "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang fi
+
+          
         - name: Start Building Kernel
           run: |
             ./build.sh
