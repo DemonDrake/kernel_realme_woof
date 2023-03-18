@@ -2,9 +2,6 @@
 
 set -e -x
 
-# Kernel Config
-KERNEL_DEFCONFIG="vendor/lahaina-qgki_defconfig"
-
 # Clang directory
 CLANG_DIR="clang"
 
@@ -40,7 +37,7 @@ SECONDS=0
 [ -d "out" ] && rm -rf out || mkdir -p out
 
 # Start Compiling Kernel
-make_fun "${KERNEL_DEFCONFIG}"
+make_fun vendor/lahaina-qgki_defconfig
 make_fun -j"$(nproc --all)" 2>&1 | tee build.log 
 
 git clone --depth=1 https://github.com/cd-Seraph/AnyKernel3.git -b master AnyKernel
