@@ -12,7 +12,9 @@ ZIPNAME="Woof-RMX3461-$(date '+%Y%m%d-%H%M').zip"
 make_fun() {
 	make O=out ARCH=arm64 \
 		CC=clang HOSTCC=clang \
-		CROSS_COMPILE=${CLANG_DIR}/bin/llvm- LLVM=1 LLVM_IAS=1 \
+		CROSS_COMPILE=${CLANG_DIR}/bin/llvm- \
+		LLVM=1 \
+		LLVM_IAS=1 \
 		CLANG_TRIPLE=aarch64-linux-gnu- 
 }
 
