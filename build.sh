@@ -5,9 +5,6 @@ set -e -x
 # Clang directory
 CLANG_DIR="clang"
 
-# Prebuilt Clang Toolchain (AOSP)
-CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android13-release/clang-r450784d.tar.gz"
-
 # Final Zip Name
 ZIPNAME="Woof-RMX3461-$(date '+%Y%m%d-%H%M').zip"
 
@@ -18,9 +15,6 @@ make_fun() {
 		CROSS_COMPILE=${CLANG_DIR}/bin/llvm- LLVM=1 LLVM_IAS=1 \
 		CLANG_TRIPLE=aarch64-linux-gnu- 
 }
-
-# Cloning all the Necessary files
-if [ ! -d ${CLANG_DIR} ]; then mkdir ${CLANG_DIR} && curl "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C ${CLANG_DIR}; fi
 
 # Setting Toolchain Path
 PATH="${CLANG_DIR}/bin:${PATH}"
@@ -35,9 +29,7 @@ SECONDS=0
 [ -d "out" ] && rm -rf out || mkdir -p out
 
 # Start Compiling Kernel
-make_fun vendor/lahaina-qgki_defconfig
-
-make_fun -j"$(nproc --all)" || exit $?
+make O=out ARCH=arm64 vendor/lahaina-qgki_defconfig
 make_fun -j"$(nproc --all)" 2>&1 | tee build.log 
 
 git clone --depth=1 https://github.com/cd-Seraph/AnyKernel3.git -b master AnyKernel
