@@ -45,6 +45,7 @@ make_fun -j"$(nproc --all)" 2>&1 | tee build.log
 
 git clone --depth=1 https://github.com/cd-Seraph/AnyKernel3.git -b master AnyKernel
 cp out/arch/arm64/boot/Image AnyKernel
+cp out/arch/arm64/boot/dts/vendor/oplus_7325/yupik.dtb AnyKernel/dtb
 python3 scripts/dtc/libfdt/mkdtboimg.py create AnyKernel/dtbo.img --page_size=4096 out/arch/arm64/boot/dts/vendor/oplus_7325/yupik-21643-overlay.dtbo
 cd AnyKernel
 zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder
