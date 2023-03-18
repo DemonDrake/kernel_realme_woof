@@ -34,11 +34,8 @@ jobs:
           
         - name: Setup the Environment
           run: |
-            # Prebuilt Clang Toolchain (AOSP)
-            CLANG_URL="https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android13-release/clang-r450784d.tar.gz"
-            # Cloning all the Necessary files
-            if [ ! -d clang ]; then mkdir clang && curl "${CLANG_URL}" -o clang.tgz && tar -xzf clang.tgz -C clang fi
-
+            ./scripts/envsetup.sh
+            ./scripts/clang.sh
           
         - name: Start Building Kernel
           run: |
