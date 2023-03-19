@@ -35,7 +35,6 @@ jobs:
         - name: Setup the Environment
           run: |
             ./scripts/envsetup.sh
-            ./scripts/clang.sh
           
         - name: Start Building Kernel
           run: |
