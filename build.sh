@@ -18,6 +18,8 @@ make_fun() {
 		CLANG_TRIPLE=aarch64-linux-gnu- 
 }
 
+if [ ! -d ${CLANG_DIR} ]; then mkdir ${CLANG_DIR} && curl "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android13-release/clang-r450784d.tar.gz" -o clang.tgz && tar -xzf clang.tgz -C ${CLANG_DIR}; fi
+
 # Setting Toolchain Path
 PATH="${CLANG_DIR}/bin:${PATH}"
 
