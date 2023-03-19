@@ -1,1 +1,0 @@
-if [ ! -d clang ]; then mkdir clang && curl "https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android13-release/clang-r450784d.tar.gz" -o clang.tgz && tar -xzf clang.tgz -C clang; fi
